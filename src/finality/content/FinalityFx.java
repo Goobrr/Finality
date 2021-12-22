@@ -41,12 +41,14 @@ public class FinalityFx {
         Draw.blend();
     }),
 
-    cryoDespawn = new Effect(60, e -> {
+    cryoDespawn = new Effect(75, e -> {
         Draw.z(Layer.bullet - 0.1f);
         Draw.blend(Blending.additive);
 
         Tmp.c1.set(Liquids.cryofluid.color).a(e.fout(Interp.pow5In));
         Fill.light(e.x, e.y, 10, 20, Tmp.c1, Color.clear);
+        Draw.color(Tmp.c1);
+        Fill.circle(e.x, e.y, 10 * e.fout(Interp.pow5In));
 
         Draw.blend();
     }),
