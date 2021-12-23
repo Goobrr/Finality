@@ -1,6 +1,7 @@
 package finality.content;
 
 import finality.type.*;
+import finality.world.blocks.defense.turrets.*;
 import mindustry.content.*;
 import mindustry.entities.bullet.*;
 import mindustry.gen.*;
@@ -14,10 +15,10 @@ public class FinalityBlocks {
     public static Block snowfall, winter;
 
     public static void load(){
-        snowfall = new PowerTurret("snowfall"){{
+        snowfall = new ConsumeTurret("snowfall"){{
             buildVisibility = BuildVisibility.shown;
             size = 2;
-            reloadTime = 75f;
+            reloadTime = 120f;
             range = 120f;
             health = 200 * size * size;
 
@@ -41,13 +42,19 @@ public class FinalityBlocks {
                 despawnEffect = FinalityFx.cryoDespawn;
             }};
 
+            hasPower = true;
             consumes.liquid(Liquids.cryofluid, 0.3f).update(false);
-        }};
+        }
+            @Override
+            public boolean valid(Building b) {
+                return b.liquids.get(Liquids.cryofluid) * b.power.status != 0;
+            }
+        };
 
-        winter = new PowerTurret("winter"){{
+        winter = new ConsumeTurret("winter"){{
             buildVisibility = BuildVisibility.shown;
             size = 3;
-            reloadTime = 200f;
+            reloadTime = 300f;
             range = 200f;
             health = 300 * size * size;
 
@@ -71,7 +78,13 @@ public class FinalityBlocks {
                 despawnEffect = FinalityFx.cryoDespawn;
             }};
 
+            hasPower = true;
             consumes.liquid(Liquids.cryofluid, 0.5f).update(false);
-        }};
+        }
+            @Override
+            public boolean valid(Building b) {
+                return b.liquids.get(Liquids.cryofluid) * b.power.status != 0;
+            }
+        };
     }
 }
